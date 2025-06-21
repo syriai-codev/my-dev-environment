@@ -1,0 +1,57 @@
+{
+  "name": "Universal Dev Environment (Node.js, Zsh, Docker)",
+  // استخدم صورة شاملة كنقطة انطلاق. هذه الصورة تحتوي على الكثير من الأدوات المفيدة.
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+
+  // "Features" هي الطريقة الحديثة لإضافة أدوات مثل Node.js, Zsh, Docker, etc.
+  "features": {
+    // إضافة Node.js عبر nvm، وتثبيت إصدار 20 كافتراضي
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    // إضافة ودعم Docker-in-Docker لتشغيل أوامر Docker من داخل Codespace
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true
+    },
+    // إضافة واجهة أوامر GitHub CLI
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    // إضافة Zsh (مهم لتجربة الطرفية المحسنة)
+    "ghcr.io/devcontainers/features/zsh:1": {
+      "version": "latest",
+      "plugins": "git zsh-autosuggestions zsh-syntax-highlighting",
+      "ohmyzsh": "true"
+    }
+  },
+
+  // إعدادات خاصة بـ VS Code داخل الـ Codespace
+  "customizations": {
+    "vscode": {
+      // قائمة بالإضافات (Extensions) التي سيتم تثبيتها تلقائيًا
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "github.vscode-github-actions",
+        "github.copilot",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ],
+      // إعدادات VS Code الافتراضية لهذه البيئة
+      "settings": {
+        // اجعل Zsh هي الطرفية الافتراضية
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        }
+      }
+    }
+  },
+
+  // أوامر يتم تشغيلها مرة واحدة فقط بعد إنشاء الـ Codespace
+  "postCreateCommand": "echo 'Welcome! Your powerful dev environment is ready. Run npm -v and docker --version to verify.'"
+
+  // "forwardPorts": [3000, 5432], // قم بإلغاء التعليق وإضافة المنافذ التي تريد فتحها تلقائيًا (مثل 3000 لـ Node, 5432 لـ Postgres)
+  // "remoteUser": "vscode" // المستخدم الافتراضي داخل الحاوية
+}
